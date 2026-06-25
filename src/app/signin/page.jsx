@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail, ShieldCheck, Zap } from "lucide-react";
 import { toast } from "react-toastify";
-import { authClient } from "@/lib/auth-client"; // তোমার প্রজেক্টের পাথ অনুযায়ী ঠিক করে নিও
+import { authClient } from "@/lib/auth-client"; 
 
 export default function SignIn() {
   const search = useSearchParams();
@@ -49,15 +49,15 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#F8FAFC] font-sans">
-      {/* 🔴 Left Side: Banner / Branding */}
+     
       <div
         className="relative hidden lg:flex flex-col justify-between p-12 text-white bg-cover bg-center"
         style={{ backgroundImage: "url('/Assets/sign_in_bg.webp')" }}
       >
-        {/* Dark Red/Blue Gradient Overlay to match screenshot */}
+       
         <div className="absolute inset-0 bg-gradient-to-b from-[#E11D48]/80 to-[#0B1528]/90 z-0"></div>
 
-        {/* Content Top */}
+     
         <div className="relative z-10">
           <h1 className="text-3xl font-black tracking-tight flex items-center gap-2">
             BloodNet
@@ -68,7 +68,7 @@ export default function SignIn() {
           </p>
         </div>
 
-        {/* Content Bottom: Features */}
+      
         <div className="relative z-10 space-y-6">
           <div className="flex items-start gap-4">
             <div className="p-2 bg-white/10 rounded-xl border border-white/10 mt-0.5">
@@ -96,9 +96,9 @@ export default function SignIn() {
         </div>
       </div>
 
-      {/* ⚪ Right Side: Login Form */}
+      
       <div className="flex items-center justify-center p-6 sm:p-12 md:p-20 relative bg-white">
-        {/* Subtle Watermark Drop Icon at bottom right corner like screenshot */}
+       
         <div className="absolute right-8 bottom-8 opacity-[0.03] text-[#E11D48] pointer-events-none">
           <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
@@ -106,7 +106,7 @@ export default function SignIn() {
         </div>
 
         <div className="w-full max-w-md space-y-8">
-          {/* Header */}
+         
           <div>
             <h2 className="text-3xl font-extrabold text-[#0F172A] tracking-tight">
               Welcome back
@@ -116,9 +116,9 @@ export default function SignIn() {
             </p>
           </div>
 
-          {/* Form */}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
+          
             <div>
               <label className="block text-xs font-bold text-[#0F172A] uppercase tracking-wide mb-1.5">
                 Email Address
@@ -139,7 +139,7 @@ export default function SignIn() {
               </div>
             </div>
 
-            {/* Password Field */}
+            
             <div>
               <label className="block text-xs font-bold text-[#0F172A] uppercase tracking-wide mb-1.5">
                 Password
@@ -167,7 +167,7 @@ export default function SignIn() {
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password */}
+           
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center gap-2 text-[#475569] font-semibold cursor-pointer select-none">
                 <input
@@ -184,7 +184,7 @@ export default function SignIn() {
               </Link>
             </div>
 
-            {/* Submit Button */}
+            
             <div>
               <button
                 type="submit"
@@ -196,7 +196,7 @@ export default function SignIn() {
             </div>
           </form>
 
-          {/* Footer Link */}
+          
           <p className="text-sm text-center text-[#475569] font-semibold pt-2">
             Don't have an account?{" "}
             <Link
@@ -207,7 +207,7 @@ export default function SignIn() {
             </Link>
           </p>
 
-          {/* Compliance Info Bottom */}
+          
           <div className="flex items-center justify-center gap-6 pt-6 border-t border-[#F1F5F9] text-[11px] text-[#94A3B8] font-bold uppercase tracking-wider">
             <span className="flex items-center gap-1.5">🔒 SSL Encrypted</span>
             <span className="flex items-center gap-1.5">🛡️ GDPR Ready</span>
