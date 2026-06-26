@@ -16,6 +16,9 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { toast } from "react-toastify";
+import { statusRequest } from "@/lib/action/statusUpdate";
+import { deleteRequest } from "@/lib/action/DeleteRequest";
+import { UpdateRequest } from "@/lib/action/requestUpdate";
 
 const StatCard = ({ title, count, icon: Icon, bgIcon }) => (
   <div className="p-5 bg-white rounded-xl border border-slate-200/60 shadow-xs flex justify-between items-center">
@@ -123,9 +126,18 @@ export default function GetMyRequest({ userId }) {
   };
 
   const executeDelete = async () => {
-    toast.success("Request successfully deleted!");
-    setIsDeleteOpen(false);
+    const requestId = selectedRequest._id?.$oid || selectedRequest._id;
+    const result=await deleteRequest(requestId,userId);
+    
+    if(result.success){
+          toast.success("Request successfully deleted!");
+          setIsDeleteOpen(false);
     refreshData();
+    }else{
+        toast.error('Something Goes wrong,Try again later');
+    }
+   
+    
   };
 
   // 🆕 মোডাল ওপেন করার হ্যান্ডলার
@@ -137,11 +149,20 @@ export default function GetMyRequest({ userId }) {
   // 🆕 মোডাল থেকে কনফার্ম করলে এই ফাংশন রান হবে
   const executeStatusUpdate = async () => {
     const { id, nextStatus } = pendingStatusUpdate;
-    // এখানে তোর ব্যাকএন্ড এপিআই কল হবে (যেমন: axios.patch বা fetch)
-    // আপাতত টোস্ট এবং রিফ্রেশ দিয়ে হ্যান্ডেল করা হলো
-    toast.success(`Status updated to ${nextStatus}`);
+    const data={
+        status:nextStatus
+    }
+
+    const result=await statusRequest(data,id,userId)
+    if(result.success){
+         toast.success(`Status updated to ${nextStatus}`);
+    }else{
+        toast.error('Something Goes wrong');
+    }
+    
     setIsStatusModalOpen(false);
     refreshData();
+
   };
 
   // 🆕 এডিট ফর্ম সাবমিট হ্যান্ডলার (সব ডেটা কালেক্ট করার জন্য)
@@ -160,15 +181,21 @@ export default function GetMyRequest({ userId }) {
       donation_time: formData.get("donation_time"),
       request_message: formData.get("request_message"),
     };
-
+    const requestId = selectedRequest._id?.$oid || selectedRequest._id;
+    const result =await UpdateRequest(updatedData,requestId,userId);
+    if(result.success){
+    toast.success("Successfully updated!");
+    setIsEditOpen(false);
+    refreshData();
+    }else{
+        toast.error('Something Goes wrong. Try again later');
+    }
     console.log("Collected Edited Data:", updatedData);
     
     // এখানে তোর এপিআই কল করবি ব্যাকএন্ডে আপডেট করার জন্য:
     // const res = await updateRequestDetails(selectedRequest._id, updatedData);
 
-    toast.success("Successfully updated!");
-    setIsEditOpen(false);
-    refreshData();
+    
   };
 
   return (

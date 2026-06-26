@@ -41,6 +41,27 @@ export const serverGet = async (path) => {
  
 };
 
+export const serverPatch =async (path,data)=>{
+    const result=await fetch(`${process.env.SERVER_URL}${path}`,{
+        method:'PATCH',
+        headers:{
+            'Content-type':'application/json',
+            ... await authHeader()
+        },
+        body:JSON.stringify(data)
+    })
+    return result.json();
+}
+
+export const serverDelete=async(path)=>{
+    const result = await fetch(`${process.env.SERVER_URL}${path}`,{
+        method:'DELETE',
+        headers:{
+            ... await authHeader()
+        }
+    })
+    return result.json();
+}
 const handleResult = async (result) => {
   try {
     const responseData = await result.json();
@@ -62,3 +83,4 @@ const handleResult = async (result) => {
     return { success: false, message: "Failed to parse server response." };
   }
 };
+
