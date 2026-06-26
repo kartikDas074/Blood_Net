@@ -26,3 +26,8 @@ export const getMyRequest=async(userId,page=1,limit=10,status="",search="")=>{
     return result;
 }
 
+export const getDonateDetail=async(id)=>{
+    const result= await serverGet(`/api/donationRequest/${id}`);
+    return result;
+}
+
