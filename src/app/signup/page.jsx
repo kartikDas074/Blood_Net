@@ -41,7 +41,7 @@ export default function SignUp() {
 
   const districtsList = districtData[0]?.data || [];
   const allUpazilasList = upazilaData[0]?.data || [];
-  console.log("total data", districtData.length);
+
   
   const availableUpazilas = formData.district
     ? allUpazilasList.filter((u) => u.district_id === formData.district)

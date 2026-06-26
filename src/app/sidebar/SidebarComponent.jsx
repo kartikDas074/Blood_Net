@@ -182,7 +182,7 @@ const SidebarComponent = ({ user }) => {
       </div>
 
       {/* 💻 Desktop View (Static Left Sidebar) */}
-      <div className="hidden md:block w-64 h-[calc(100vh-65px)] border-r border-slate-200/80 sticky top-[65px] flex-shrink-0">
+      <div className="hidden md:block w-64 border-r border-slate-200/80 h-full flex-shrink-0">
         {sidebarContentLayout}
       </div>
 
