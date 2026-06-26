@@ -11,20 +11,21 @@ import {
   Loader2, 
   Camera,
   Mail,
-  Phone,
   Edit2,
   CheckCircle,
-  XCircle
+  XCircle,
+  Activity,
+  Calendar,
+  Award
 } from "lucide-react";
 
 import districtData from "../../../Constants/District.json";
 import upazilaData from "../../../Constants/Upazila.json";
+import { profileUpdata } from '@/lib/action/profile';
+import { useRouter } from 'next/navigation';
 
-
-
-
-
-const Myprofile=({ user })=> {
+const Myprofile = ({ user }) => {
+  const router = useRouter();
   const {
     _id,
     name,
@@ -58,19 +59,18 @@ const Myprofile=({ user })=> {
     return match ? match.id : "";
   };
 
-  // ফর্ম স্টেট ইনিশিয়ালাইজেশন
+  // ফর্ম স্টেট ইনিশিয়ালাইজেশন (phone বাদ দিয়ে status রাখা হয়েছে)
   const [formData, setFormData] = useState({
     name: name || '',
     blood_group: blood_group || '',
     district: findDistrictId(district),
     upazila: findUpazilaId(upazila),
-    phone: user?.phone || '',
   });
 
   const [avatarPreview, setAvatarPreview] = useState(image || "");
   const [avatarUrl, setAvatarUrl] = useState(image || "");
 
-  // ডিস্ট্রিক্ট অনুযায়ী উপজেলা ফিল্টারিং
+  // ডিস্ট্রিক্ট অনুযায়ী উপজেলা ফিল্টারিং
   const availableUpazilas = formData.district
     ? allUpazilasList.filter((u) => u.district_id === formData.district)
     : allUpazilasList;
@@ -126,9 +126,9 @@ const Myprofile=({ user })=> {
   // 🛡️ ফুলপ্রুফ প্রোফাইল আপডেট (Better-Auth + ডিরেক্ট ডাটাবেজ ব্যাকআপ সেভ)
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    loading(true);
 
-    // সেভ করার আগে আইডি থেকে নাম কনভার্ট করে নিচ্ছি যেন ডাটাবেজে সুন্দর দেখায়
+    // সেভ করার আগে আইডি থেকে নাম কনভার্ট করে নিচ্ছি যেন ডাটাবেজে সুন্দর দেখায়
     const finalDistrictName = districtsList.find(d => d.id === formData.district)?.name || formData.district;
     const finalUpazilaName = allUpazilasList.find(u => u.id === formData.upazila)?.name || formData.upazila;
 
@@ -139,28 +139,20 @@ const Myprofile=({ user })=> {
         image: avatarUrl,
       });
 
-      // ২. 🚀 ডিরেক্ট ডাটাবেজ এপিআই কল (রিলোড দিলে ডাটা হারানো বন্ধ করতে)
-      const targetId = _id?.$oid || _id;
-      const res = await fetch(`/api/user/update/${targetId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          image: avatarUrl,
-          blood_group: formData.blood_group,
-          district: finalDistrictName,
-          upazila: finalUpazilaName,
-          phone: formData.phone
-        }),
+      // ২. 🚀 ডিরেক্ট ডাটাবেজ এপিআই কল
+      const res = await profileUpdata({
+        name: formData.name,
+        image: avatarUrl,
+        blood_group: formData.blood_group,
+        district: finalDistrictName,
+        upazila: finalUpazilaName,
       });
 
-      if (!res.ok) throw new Error("Database sync failed");
+      if (!res.success) throw new Error("Database sync failed");
 
       toast.success("Profile permanently updated!");
       setIsEditing(false);
-      
-      // ক্লায়েন্ট সেশন ও স্টেট রিফ্রেশ
-      router.refresh ? router.refresh() : window.location.reload();
+      router.refresh();
     } catch (error) {
       console.error("Update Error:", error);
       toast.error("Failed to sync profile changes.");
@@ -234,10 +226,10 @@ const Myprofile=({ user })=> {
         )}
       </div>
 
-      {/* 📋 ২. কালারাইজড প্রিমিয়াম ফর্ম গ্রিড */}
+      {/* 📋 ২. কালারাইজড প্রিমিয়াম ফর্ম গ্রিড */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         
-        {/* ফর্ম কন্টেইনার কার্ড */}
+        {/* ফর্ম কন্টেইনারカード */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8 lg:col-span-2">
           <div className="flex justify-between items-center border-b border-slate-100 pb-5 mb-6">
             <h3 className="font-bold text-slate-900 flex items-center gap-2.5 text-lg">
@@ -321,21 +313,14 @@ const Myprofile=({ user })=> {
                 )}
               </div>
 
-              {/* ফোন */}
+              {/* 🔄 স্ট্যাটাস ফিল্ড (ফোন সরিয়ে এটি দেওয়া হয়েছে, এডিট করা যাবে না) */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Phone Number</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Profile Status</label>
                 <input 
                   type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  disabled={!isEditing}
-                  placeholder="+880 1712-345678"
-                  className={`w-full text-sm font-semibold rounded-xl h-12 px-4 border transition-all duration-200 focus:outline-none ${
-                    !isEditing 
-                      ? 'bg-slate-50/70 text-slate-600 border-slate-200/60 cursor-not-allowed shadow-inner' 
-                      : 'bg-white text-slate-800 border-rose-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-500/10 shadow-sm'
-                  }`}
+                  value={status ? status.toUpperCase() : "ACTIVE"}
+                  disabled
+                  className="w-full text-sm font-bold rounded-xl h-12 px-4 bg-slate-50 text-emerald-600 border border-slate-200/60 cursor-not-allowed shadow-inner uppercase tracking-wide"
                 />
               </div>
 
@@ -406,7 +391,6 @@ const Myprofile=({ user })=> {
                       blood_group,
                       district: findDistrictId(district),
                       upazila: findUpazilaId(upazila),
-                      phone: user?.phone || '',
                     });
                     setAvatarPreview(image || "");
                   }}
@@ -426,8 +410,41 @@ const Myprofile=({ user })=> {
           </form>
         </div>
 
-        {/* ডানের সাইড প্যানেল */}
+        {/* ডানের সাইড প্যানেল (এখানে ৩টি নতুন স্ট্যাটিক ফিল্ড কার্ড যোগ করা হয়েছে) */}
         <div className="space-y-6">
+          
+          {/* নতুন স্ট্যাটিক ইনফো কার্ড */}
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-3 mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> Donation Summary
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 bg-slate-50/80 p-3 rounded-xl border border-slate-100">
+                <div className="p-2 bg-rose-50 rounded-lg text-rose-500"><Award className="w-4 h-4" /></div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase">Total Donations</p>
+                  <p className="text-sm font-extrabold text-slate-700">0 Blocks</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-slate-50/80 p-3 rounded-xl border border-slate-100">
+                <div className="p-2 bg-blue-50 rounded-lg text-blue-500"><Calendar className="w-4 h-4" /></div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase">Last Donation Date</p>
+                  <p className="text-sm font-extrabold text-slate-700">None Recorded</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-slate-50/80 p-3 rounded-xl border border-slate-100">
+                <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500"><Activity className="w-4 h-4" /></div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase">Availability</p>
+                  <p className="text-sm font-extrabold text-emerald-600">Available to Donate</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-3 mb-4 flex items-center gap-2">
               <span className="w-1.5 h-3 bg-blue-500 rounded-full"></span> Account Meta Status
