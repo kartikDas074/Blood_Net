@@ -4,7 +4,7 @@ import React from 'react';
 
 const DonorLayout =async ({children}) => {
     const session=await userInfo();
-    checkAccess(session,'donor');
+    await checkAccess(session,'donor');
     return (
         <div>
             {children}
