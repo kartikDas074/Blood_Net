@@ -15,7 +15,7 @@ import {
   Users,
   Building2,
   X,
-  Sidebar, 
+  Sidebar,
 } from "lucide-react";
 
 const SidebarComponent = ({ user }) => {
@@ -37,33 +37,73 @@ const SidebarComponent = ({ user }) => {
 
   // ডোনরের বেস অপশনস
   const donorItems = [
-    { name: "Dashboard Home", path: "/dashboard/donor", icon: LayoutDashboard },
+    { name: "Dashboard", path: "/dashboard/donor", icon: LayoutDashboard },
     { name: "My Profile", path: "/dashboard/donor/profile", icon: User },
-    { name: "Create Donation Request", path: "/dashboard/donor/create-request", icon: PlusCircle },
-    { name: "My Donation Requests", path: "/dashboard/donor/my-requests", icon: History },
-    { name: "Funding", path: "/dashboard/donor/funding", icon: DollarSign },
+    {
+      name: "Create Donation Request",
+      path: "/dashboard/donor/create-donation-request",
+      icon: PlusCircle,
+    },
+    {
+      name: "My Donation Requests",
+      path: "/dashboard/donor/my-donation-requests",
+      icon: History,
+    },
   ];
 
   // রোল অনুযায়ী অপশন কম্বাইন করার ম্যাপার
   const getMenuItems = () => {
     if (currentRole === "admin") {
       return [
-        { name: "Dashboard Home", path: "/dashboard/admin", icon: LayoutDashboard },
+        { name: "Dashboard", path: "/dashboard/admin", icon: LayoutDashboard },
         { name: "My Profile", path: "/dashboard/admin/profile", icon: User },
-        { name: "Manage Requests", path: "/dashboard/admin/manage-requests", icon: ShieldCheck },
+        {
+          name: "Create Donation Request",
+          path: "/dashboard/donor/create-donation-request",
+          icon: PlusCircle,
+        },
+        {
+          name: "My Donation Requests",
+          path: "/dashboard/donor/my-donation-requests",
+          icon: History,
+        },
+        {
+          name: "Manage Requests",
+          path: "/dashboard/admin/all-request",
+          icon: ShieldCheck,
+        },
         { name: "Manage Users", path: "/dashboard/admin/users", icon: Users },
-        { name: "Blood Bank Status", path: "/dashboard/admin/blood-banks", icon: Building2 },
+       
       ];
     }
 
     if (currentRole === "volunteer") {
       return [
-        { name: "Dashboard Home", path: "/dashboard/volunteer", icon: LayoutDashboard },
-        { name: "My Profile", path: "/dashboard/volunteer/profile", icon: User },
-        { name: "Create Donation Request", path: "/dashboard/volunteer/create-request", icon: PlusCircle },
-        { name: "My Donation Requests", path: "/dashboard/volunteer/my-requests", icon: History },
-        { name: "Funding", path: "/dashboard/volunteer/funding", icon: DollarSign },
-        { name: "Manage Requests", path: "/dashboard/volunteer/manage-requests", icon: ShieldCheck },
+        {
+          name: "Dashboard",
+          path: "/dashboard/volunteer",
+          icon: LayoutDashboard,
+        },
+        {
+          name: "My Profile",
+          path: "/dashboard/volunteer/profile",
+          icon: User,
+        },
+        {
+          name: "Create Donation Request",
+          path: "/dashboard/volunteer/create-donation-request",
+          icon: PlusCircle,
+        },
+        {
+          name: "My Donation Requests",
+          path: "/dashboard/volunteer/my-donation-requests",
+          icon: History,
+        },
+        {
+          name: "Manage Requests",
+          path: "/dashboard/volunteer/all-request",
+          icon: ShieldCheck,
+        },
       ];
     }
 
@@ -92,7 +132,11 @@ const SidebarComponent = ({ user }) => {
         <div className="flex items-center gap-3 p-3 bg-white border border-slate-100 rounded-xl shadow-sm">
           <div className="w-10 h-10 rounded-lg overflow-hidden bg-slate-200 border border-slate-100 flex-shrink-0">
             {user?.image ? (
-              <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+              <img
+                src={user.image}
+                alt={user.name}
+                className="w-full h-full object-cover"
+              />
             ) : (
               <div className="w-full h-full flex items-center justify-center font-black text-slate-500 bg-slate-200">
                 {user?.name?.charAt(0).toUpperCase() || "U"}
@@ -154,18 +198,16 @@ const SidebarComponent = ({ user }) => {
   return (
     <>
       {/* 📱 Mobile Bottom Center Menu Button */}
-      <div 
+      <div
         className={`md:hidden fixed rounded-[8px] bg-[#886565] bottom-6 z-50 transition-all duration-300 ${
-          mobileSidebarOpen 
-            ? "left-1/2 -translate-x-1/2" 
-            : ""
+          mobileSidebarOpen ? "left-1/2 -translate-x-1/2" : ""
         }`}
       >
         <button
           onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
           className={`px-5 py-3 text-white rounded-full shadow-2xl border border-red-500/20 active:scale-95 transition-all flex gap-2 font-bold text-sm backdrop-blur-xs bg-opacity-95 ${
-            mobileSidebarOpen 
-              ? "items-center justify-center w-full" 
+            mobileSidebarOpen
+              ? "items-center justify-center w-full"
               : "items-start justify-start"
           }`}
         >
