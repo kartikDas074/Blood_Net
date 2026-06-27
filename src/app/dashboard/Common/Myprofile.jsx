@@ -126,7 +126,7 @@ const Myprofile = ({ user }) => {
   // 🛡️ ফুলপ্রুফ প্রোফাইল আপডেট (Better-Auth + ডিরেক্ট ডাটাবেজ ব্যাকআপ সেভ)
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    loading(true);
+    setLoading(true);
 
     // সেভ করার আগে আইডি থেকে নাম কনভার্ট করে নিচ্ছি যেন ডাটাবেজে সুন্দর দেখায়
     const finalDistrictName = districtsList.find(d => d.id === formData.district)?.name || formData.district;
