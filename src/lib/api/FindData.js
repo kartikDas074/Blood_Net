@@ -92,3 +92,8 @@ export const getAllRequest = async (
   console.log(result);
   return result;
 };
+
+export const allInfo=async()=>{
+  const result=await serverGet(`/api/allinfo`);
+  return result;
+}

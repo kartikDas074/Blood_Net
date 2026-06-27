@@ -15,7 +15,7 @@ import { deleteRequest } from "@/lib/action/DeleteRequest";
 import { UpdateRequest } from "@/lib/action/requestUpdate";
 import Link from "next/link";
 
-const LatestRequest = ({ data = [], userId }) => {
+const LatestRequest = ({ data = [], userId,userRole='donor' }) => {
   const router = useRouter();
   
   // মোডাল স্টেটসমূহ
@@ -98,13 +98,13 @@ const LatestRequest = ({ data = [], userId }) => {
         <h2 className="text-sm font-bold text-slate-800">Recent Donation Requests</h2>
         <div className="flex items-center gap-4">
           <Link 
-            href="/dashboard/donor/create-donation-request" 
+            href={`/dashboard/${userRole}/create-donation-request`} 
             className="flex items-center gap-1 text-[11px] font-bold text-emerald-600 hover:text-emerald-700 transition"
           >
             <Plus size={14} strokeWidth={2.5} /> New Request
           </Link>
           <Link 
-            href="/dashboard/donor/my-donation-requests" 
+            href={`/dashboard/${userRole}/my-donation-requests`}
             className="text-[11px] font-bold text-rose-600 hover:text-rose-700 transition"
           >
             View My All Requests
