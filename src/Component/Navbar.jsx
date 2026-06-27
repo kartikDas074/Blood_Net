@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation"; // 👈 অ্যাক্টিভ পাথ ট্র্যাকিংয়ের জন্য usePathname
+import { useRouter, usePathname } from "next/navigation"; 
 import { authClient } from "@/lib/auth-client"; 
 import { LayoutDashboard, LogOut, Menu, X, ShieldAlert } from "lucide-react";
 import { toast } from "react-toastify";
 
 export default function Navbar() {
   const router = useRouter();
-  const pathname = usePathname(); // 👈 কারেন্ট পাথ স্টোর করার ভ্যারিয়েবল
+  const pathname = usePathname();
   const { data: session, isPending } = authClient.useSession();
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function Navbar() {
 
   const user = session?.user;
 
-  // বাইরে ক্লিক করলে ড্রপডাউন বন্ধ করার লজিক
+  
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -39,14 +39,14 @@ export default function Navbar() {
     }
   };
 
-  // অ্যাক্টিভ ক্লাসের জন্য হেল্পার ফাংশন
+  
   const isActive = (path) => pathname === path;
 
   return (
     <nav className="w-full bg-[#F4F9FF] border-b border-slate-200 sticky top-0 z-50 px-4 sm:px-8 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
-        {/* 🩸 Logo (.png ইমেজ ব্যবহার করা হয়েছে) */}
+       
         <Link href="/" className="flex items-center gap-2 select-none">
           <img 
             src="/Assets/logo.png" 
@@ -73,7 +73,7 @@ export default function Navbar() {
             Donation Request
           </Link>
           
-          {/* লগইন থাকলে Funding লিংক দৃশ্যমান হবে */}
+          
           {user && (
             <Link 
               href="/funding" 
@@ -84,14 +84,14 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* ⚡ Action Buttons / User Profile (Desktop) */}
+       
         <div className="hidden md:flex items-center gap-4">
           {!isPending && (
             <>
               {!user ? (
                 <>
                   <Link 
-                    href="/login" 
+                    href="/signin" 
                     className="text-sm font-bold text-slate-700 hover:text-[#E11D48] transition px-3 py-2"
                   >
                     Login
@@ -105,7 +105,7 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  {/* Donate Now Button */}
+                 
                   <Link 
                     href="/donate" 
                     className="bg-[#E11D48] hover:bg-[#BE123C] text-white text-xs font-black px-5 py-2.5 rounded-full tracking-wide transition shadow-md shadow-red-100 uppercase"
@@ -113,7 +113,7 @@ export default function Navbar() {
                     Donate Now
                   </Link>
 
-                  {/* User Avatar Dropdown */}
+                 
                   <div className="relative" ref={dropdownRef}>
                     <button
                       onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -132,13 +132,13 @@ export default function Navbar() {
                       )}
                     </button>
 
-                    {/* Dropdown Menu */}
+                   
                     {dropdownOpen && (
                       <div className="absolute right-0 mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
-                        {/* 👤 User Info + Role (এখানে রোল শো করবে) */}
+                       
                         <div className="px-4 py-2.5 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
                           <p className="text-sm font-black text-slate-800 truncate">{user.name}</p>
-                          {/* ডাইনামিক ইউজার রোল মেডেল স্টাইল */}
+                          
                           <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 bg-[#E11D48]/10 text-[#E11D48] text-[10px] font-black uppercase tracking-wider rounded-md">
                             <ShieldAlert size={10} />
                             {user.role || "Donor"} 
@@ -146,7 +146,7 @@ export default function Navbar() {
                         </div>
                         
                         <Link
-                          href="/dashboard"
+                          href={`/dashboard/${user.role}`}
                           onClick={() => setDropdownOpen(false)}
                           className="w-full flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:text-[#E11D48] transition"
                         >
@@ -170,7 +170,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* 📱 Mobile Menu Hamburger Icon */}
+     
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -181,7 +181,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 📱 Mobile Dropdown Menu (Responsive View) */}
+      
       {mobileMenuOpen && (
         <div className="md:hidden mt-3 pt-3 border-t border-slate-200 space-y-2 flex flex-col pb-2 animate-in fade-in duration-200">
           <Link 
@@ -211,12 +211,12 @@ export default function Navbar() {
           <div className="pt-2 border-t border-slate-200 flex flex-col gap-2">
             {!user ? (
               <>
-                <Link href="/login" className="text-center text-sm font-bold text-slate-700 py-2 hover:bg-slate-50 rounded-xl" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+                <Link href="/signin" className="text-center text-sm font-bold text-slate-700 py-2 hover:bg-slate-50 rounded-xl" onClick={() => setMobileMenuOpen(false)}>Login</Link>
                 <Link href="/signup" className="text-center bg-[#E11D48] text-white text-sm font-bold py-2.5 rounded-xl shadow-sm" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
               </>
             ) : (
               <>
-                {/* মোবাইল ভিউতে রোল সহ ইউজার কার্ড */}
+               
                 <div className="px-2 py-1.5 bg-slate-50 border border-slate-100 rounded-xl mb-1 flex items-center justify-between">
                   <span className="text-xs font-black text-slate-700">{user.name}</span>
                   <span className="text-[9px] font-extrabold bg-[#E11D48]/10 text-[#E11D48] px-2 py-0.5 rounded uppercase tracking-wider">
@@ -224,7 +224,7 @@ export default function Navbar() {
                   </span>
                 </div>
                 <Link href="/donate" className="text-center bg-[#E11D48] text-white text-sm font-bold py-2.5 rounded-xl uppercase tracking-wide" onClick={() => setMobileMenuOpen(false)}>Donate Now</Link>
-                <Link href="/dashboard" className="flex items-center justify-center gap-2 text-sm font-bold text-slate-700 py-2 hover:bg-slate-50 rounded-xl" onClick={() => setMobileMenuOpen(false)}>
+                <Link href={`/dashboard/${user.role}`} className="flex items-center justify-center gap-2 text-sm font-bold text-slate-700 py-2 hover:bg-slate-50 rounded-xl" onClick={() => setMobileMenuOpen(false)}>
                   <LayoutDashboard size={16} /> Dashboard
                 </Link>
                 <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="flex items-center justify-center gap-2 text-sm font-bold text-rose-600 py-2 hover:bg-rose-50 rounded-xl w-full">
