@@ -47,7 +47,7 @@ export const UserList = async (
     page: page,
     limit: limit,
   });
-  
+
   if (status != "") {
     query.append("status", status);
   }
@@ -56,6 +56,39 @@ export const UserList = async (
   }
   const params = query.toString();
   console.log(params);
-  const result =await serverGet(`/allusers?${params}`);
+  const result = await serverGet(`/allusers?${params}`);
+  return result;
+};
+
+export const getAllRequest = async (
+  userId, // 👈 userId প্যারামিটার যুক্ত করা হলো
+  page = 1,
+  limit = 10,
+  status = "",
+  search = "",
+) => {
+  const query = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  // userId থাকলে কুয়েরিতে যোগ করবে (ব্যাকএন্ডে req.query.id হিসেবে পাবে)
+  if (userId) {
+    query.append("id", userId);
+  }
+
+  // status খালি না হলে কুয়েরিতে যোগ করবে
+  if (status && status !== "all") {
+    query.append("status", status);
+  }
+
+  // search ভ্যালু থাকলে যোগ করবে
+  if (search.trim()) {
+    query.append("search", search.trim());
+  }
+
+  const params = query.toString();
+  const result = await serverGet(`/api/get-request?${params}`);
+  console.log(result);
   return result;
 };
