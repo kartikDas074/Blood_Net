@@ -1,4 +1,4 @@
-import { allInfo, latestRequest } from "@/lib/api/FindData";
+import { allInfo, getTotalFunding, latestRequest } from "@/lib/api/FindData";
 import { userInfo } from "@/lib/core/session";
 import React from "react";
 import Link from "next/link";
@@ -16,7 +16,7 @@ import {
 import LatestRequest from "../Common/LatestReqest";
 
 const VolunteerPage = async () => {
-  // 🛰️ ডেটা ফেচিং
+
   const Info = await allInfo();
   const result = await latestRequest();
   const stat = Info?.statistics;
@@ -25,7 +25,7 @@ const VolunteerPage = async () => {
 
   const userId = user?._id?.toString() || user?.id;
 
-  // 🎯 ডাটাবেজ থেকে রিয়েল-টাইম ডাটা ম্যাপিং
+  
   const totalUsers = stat?.totalUsers || 0;
   const totalDonations = stat?.totalDonations || 0;
   const totalDonors = stat?.totalDonors || 0;
@@ -34,7 +34,7 @@ const VolunteerPage = async () => {
   const totalActive = stat?.totalActive || 0;
   const totalBlocked = stat?.totalBlocked || 0; 
 
-  // 📊 উইকলি বার চার্টের জন্য ডামি ডেটা (যেমনটা রাখতে বলেছিস)
+ 
   const weeklyRequests = [
     { day: "MON", value: 40 },
     { day: "TUE", value: 65 },
@@ -44,11 +44,13 @@ const VolunteerPage = async () => {
     { day: "SAT", value: 90 },
     { day: "SUN", value: 35 },
   ];
-
+   
+  const Founding=await getTotalFunding();
+  const total=Founding.totalAmount;
   return (
     <div className="min-h-screen bg-slate-50 p-4 lg:p-8 font-sans">
       
-      {/* ================= 👑 HERO / ADMIN BANNER ================= */}
+     
       <div className="mb-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 rounded-3xl border border-slate-200/80 bg-white p-6 lg:p-8 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full blur-2xl -z-10"></div>
         
@@ -131,9 +133,9 @@ const VolunteerPage = async () => {
         <div className="bg-white border border-slate-200/60 rounded-2xl p-6 flex justify-between items-center shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 left-0 h-1 w-full bg-emerald-500"></div>
           <div>
-            <p className="text-xs uppercase tracking-widest font-bold text-slate-400">Active Accounts</p>
+            <p className="text-xs uppercase tracking-widest font-bold text-slate-400">Total Funding</p>
             <h2 className="mt-3 text-4xl font-black text-slate-900 tracking-tight">
-              {String(totalActive).padStart(2, "0")}
+              {total}$
             </h2>
             <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mt-2 inline-block">
               🟢 Verified & Verified Active

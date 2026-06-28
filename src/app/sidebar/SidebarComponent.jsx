@@ -121,7 +121,7 @@ const SidebarComponent = ({ user }) => {
         {/* Title */}
         <div>
           <h2 className="text-lg font-black text-[#E11D48] tracking-tight leading-none">
-            LifeStream
+            BloodNet
           </h2>
           <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">
             Management Portal

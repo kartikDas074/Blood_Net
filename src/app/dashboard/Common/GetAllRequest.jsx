@@ -392,7 +392,7 @@ export default function GetAllRequest({
                                       setSelectedRequest(req);
                                       setIsDeleteOpen(true);
                                     }}
-                                    className={`${user.role==='admin'?'flex':'hidden'}p-1.5 cursor-pointer rounded-lg border border-slate-200 hover:bg-slate-50 text-rose-600 transition`}
+                                    className={`${user.role==='admin'?'flex':'hidden'} p-1.5 cursor-pointer rounded-lg border border-slate-200 hover:bg-slate-50 text-rose-600 transition`}
                                     title="Delete"
                                   >
                                     <Trash2 size={13} strokeWidth={2.5} />

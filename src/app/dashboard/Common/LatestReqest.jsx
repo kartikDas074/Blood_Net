@@ -119,7 +119,7 @@ const LatestRequest = ({ data = [], userId,userRole='donor' }) => {
             <p className="text-xs font-semibold text-slate-400">
               You haven't posted any blood donation requests yet.
             </p>
-            <Link href="/dashboard/donor/create-donation-request">
+            <Link href={`/dashboard/${userRole}/create-donation-request`}>
               <button className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-rose-600 text-white rounded-lg text-xs font-bold hover:bg-rose-700 transition mt-2">
                 <Plus size={14} strokeWidth={2.5} /> Create First Request
               </button>
