@@ -59,12 +59,12 @@ const SidebarComponent = ({ user }) => {
         { name: "My Profile", path: "/dashboard/admin/profile", icon: User },
         {
           name: "Create Donation Request",
-          path: "/dashboard/donor/create-donation-request",
+          path: "/dashboard/admin/create-donation-request",
           icon: PlusCircle,
         },
         {
           name: "My Donation Requests",
-          path: "/dashboard/donor/my-donation-requests",
+          path: "/dashboard/admin/my-donation-requests",
           icon: History,
         },
         {
