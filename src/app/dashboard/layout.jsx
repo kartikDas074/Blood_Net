@@ -1,7 +1,13 @@
 import React from "react";
 import SidebarComponent from "../sidebar/Sidebar"; 
+import { userInfo } from "@/lib/core/session";
+import { redirect } from "next/navigation";
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout =async ({ children }) => {
+   const session=await userInfo();
+   if(!session){
+    redirect('/signin');
+   }
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
       <SidebarComponent />

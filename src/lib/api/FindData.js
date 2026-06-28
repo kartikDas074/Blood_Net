@@ -93,7 +93,34 @@ export const getAllRequest = async (
   return result;
 };
 
-export const allInfo=async()=>{
-  const result=await serverGet(`/api/allinfo`);
+export const allInfo = async () => {
+  const result = await serverGet(`/api/allinfo`);
   return result;
-}
+};
+
+export const getAllPending = async (
+  page = 1,
+  limit = 10,
+  search = "",
+  blood_group = "",
+  district = "",
+) => {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  if (search?.trim()) {
+    params.set("search", search.trim());
+  }
+
+  if (blood_group?.trim()) {
+    params.set("blood_group", blood_group.trim());
+  }
+
+  if (district?.trim()) {
+    params.set("district", district.trim());
+  }
+
+  return await serverGet(`/api/pending-request?${params.toString()}`);
+};
