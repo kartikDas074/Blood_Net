@@ -67,7 +67,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link 
-            href="/donation-request" 
+            href="/donation" 
             className={`transition ${isActive("/donation-request") ? "text-[#E11D48]" : "text-slate-700 hover:text-[#E11D48]"}`}
           >
             Donation Request
@@ -107,7 +107,7 @@ export default function Navbar() {
                 <>
                  
                   <Link 
-                    href="/donate" 
+                    href="/funding" 
                     className="bg-[#E11D48] hover:bg-[#BE123C] text-white text-xs font-black px-5 py-2.5 rounded-full tracking-wide transition shadow-md shadow-red-100 uppercase"
                   >
                     Donate Now
@@ -192,7 +192,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link 
-            href="/donation-request" 
+            href="/donation" 
             className={`text-sm font-bold px-2 py-1 rounded-lg ${isActive("/donation-request") ? "text-[#E11D48] bg-red-50/50" : "text-slate-700"}`}
             onClick={() => setMobileMenuOpen(false)}
           >

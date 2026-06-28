@@ -211,7 +211,7 @@ export default function ActiveDonationRequests() {
               No Matching Emergency Requests
             </h3>
             <p className="text-slate-400 text-sm mt-1 max-w-xs leading-relaxed">
-              We couldn't find any critical requests matching your filters right
+              We could not find any critical requests matching your filters right
               now.
             </p>
           </div>
@@ -290,7 +290,7 @@ export default function ActiveDonationRequests() {
                             className="text-slate-400 shrink-0 mt-0.5"
                           />
                           <p className="text-xs font-medium text-slate-600 italic line-clamp-2 leading-relaxed">
-                            "{item.request_message}"
+                            {item.request_message}
                           </p>
                         </div>
                       )}

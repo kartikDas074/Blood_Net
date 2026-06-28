@@ -16,12 +16,12 @@ import { toast } from "react-toastify";
 import districtData from "../../../Constants/District.json";
 import upazilaData from "../../../Constants/Upazila.json";
 import { CreateDonationRequest } from "@/lib/action/DonationRequestCreate";
+import { useRouter } from "next/navigation";
 
 
 export default function CreateRequest({ user }) {
  
   const loggedInUser = user;
-  console.log(loggedInUser);
   const [formData, setFormData] = useState({
     recipientName: "",
     districtId: "", 
@@ -62,7 +62,8 @@ export default function CreateRequest({ user }) {
       upazila: "", 
     }));
   };
-
+  
+  const router=useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -88,6 +89,7 @@ export default function CreateRequest({ user }) {
     console.log(result);
     if(result.insertedId){
       toast.success('Your donation-request Creat successfully');
+      router.push(`/dashboard/${user.role}/my-donation-requests`)
     }
 
     
