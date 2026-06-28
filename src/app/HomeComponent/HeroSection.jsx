@@ -10,8 +10,9 @@ import {
   Search,
   UserPlus
 } from 'lucide-react';
+import { getTotalFunding } from '@/lib/api/FindData';
 
-const HeroSection = ({ stat = {} }) => {
+const HeroSection = async ({ stat = {} }) => {
   const {
     totalUsers = 0,
     totalDonations = 0,
@@ -22,7 +23,8 @@ const HeroSection = ({ stat = {} }) => {
     totalBlocked = 0,
   } = stat;
 
-  const totalFunding = 45250; 
+  const Funding = await getTotalFunding();
+  const totalFunding=Funding.totalAmount;
 
   return (
     // aspect-[3/1] বা aspect-video স্ক্রিনের সাথে ইমেজ রেশিও ঠিক রাখবে, কোনো কিছু কাটবে না

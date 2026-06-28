@@ -124,3 +124,15 @@ export const getAllPending = async (
 
   return await serverGet(`/api/pending-request?${params.toString()}`);
 };
+
+
+export const getFunding=async(status=0)=>{
+  
+  const result=await serverGet(`/api/my_funding?status=${status}`);
+  return result;
+}
+
+export const getTotalFunding=async()=>{
+  const result=await serverGet('/api/total_funding');
+  return result;
+}
