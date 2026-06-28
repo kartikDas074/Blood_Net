@@ -20,6 +20,7 @@ import { statusRequest } from "@/lib/action/statusUpdate";
 import { deleteRequest } from "@/lib/action/DeleteRequest";
 import { UpdateRequest } from "@/lib/action/requestUpdate";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 // 📊 স্ট্যাটাস কার্ড উপাদান
 const StatCard = ({ title, count, icon: Icon, bgIcon }) => (
@@ -44,6 +45,10 @@ export default function GetAllRequest({
   currentStatus = "",
   currentSearch = "",
 }) {
+
+  const {data:session}=authClient.useSession();
+  const user=session?.user;
+ 
   const [requests, setRequests] = useState(initialRequests);
   const [pagination, setPagination] = useState(initialPagination);
   const [statistics, setStatistics] = useState(initialStatistics);
@@ -214,7 +219,7 @@ export default function GetAllRequest({
 
   return (
     <div className="space-y-6">
-      {/* 📊 ৫টি ডাইনামিক স্ট্যাটাস কার্ড গ্রুপ */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard
           title="Total Requests"
@@ -290,7 +295,7 @@ export default function GetAllRequest({
         </div>
       </div>
 
-      {/* 📋 মেইন ডেটা টেবিল */}
+   
       <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
         {loading ? (
           <div className="p-16 flex flex-col justify-center items-center gap-2 text-slate-400 font-bold text-xs">
@@ -377,7 +382,7 @@ export default function GetAllRequest({
                                       setSelectedRequest(req);
                                       setIsEditOpen(true);
                                     }}
-                                    className="p-1.5 cursor-pointer rounded-lg border border-slate-200 hover:bg-slate-50 text-blue-600 transition"
+                                    className={`${user.role==='admin'?'flex':'hidden'} p-1.5 cursor-pointer rounded-lg border border-slate-200 hover:bg-slate-50 text-blue-600 transition`}
                                     title="Edit"
                                   >
                                     <Edit2 size={13} strokeWidth={2.5} />
@@ -387,7 +392,7 @@ export default function GetAllRequest({
                                       setSelectedRequest(req);
                                       setIsDeleteOpen(true);
                                     }}
-                                    className="p-1.5 cursor-pointer rounded-lg border border-slate-200 hover:bg-slate-50 text-rose-600 transition"
+                                    className={`${user.role==='admin'?'flex':'hidden'}p-1.5 cursor-pointer rounded-lg border border-slate-200 hover:bg-slate-50 text-rose-600 transition`}
                                     title="Delete"
                                   >
                                     <Trash2 size={13} strokeWidth={2.5} />
@@ -589,28 +594,7 @@ export default function GetAllRequest({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block mb-1 text-slate-500">District</label>
-                  <input
-                    type="text"
-                    name="district"
-                    defaultValue={selectedRequest.district}
-                    required
-                    className="w-full p-2 rounded-lg border border-slate-200 focus:outline-none focus:border-[#E11D48]"
-                  />
-                </div>
-                <div>
-                  <label className="block mb-1 text-slate-500">Upazila</label>
-                  <input
-                    type="text"
-                    name="upazila"
-                    defaultValue={selectedRequest.upazila}
-                    required
-                    className="w-full p-2 rounded-lg border border-slate-200 focus:outline-none focus:border-[#E11D48]"
-                  />
-                </div>
-              </div>
+            
 
               <div>
                 <label className="block mb-1 text-slate-500">

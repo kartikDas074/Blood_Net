@@ -1,4 +1,4 @@
-import { allInfo, latestRequest } from "@/lib/api/FindData";
+import { allInfo, getTotalFunding, latestRequest } from "@/lib/api/FindData";
 import { userInfo } from "@/lib/core/session";
 import React from "react";
 import Link from "next/link";
@@ -44,7 +44,9 @@ const AdminPage = async () => {
     { day: "SAT", value: 90 },
     { day: "SUN", value: 35 },
   ];
-
+    
+  const funding=await getTotalFunding();
+  const totalFunding=funding.totalAmount;
   return (
     <div className="min-h-screen bg-slate-50 p-4 lg:p-8 font-sans">
       
@@ -131,9 +133,9 @@ const AdminPage = async () => {
         <div className="bg-white border border-slate-200/60 rounded-2xl p-6 flex justify-between items-center shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 left-0 h-1 w-full bg-emerald-500"></div>
           <div>
-            <p className="text-xs uppercase tracking-widest font-bold text-slate-400">Active Accounts</p>
+            <p className="text-xs uppercase tracking-widest font-bold text-slate-400">Total Founding</p>
             <h2 className="mt-3 text-4xl font-black text-slate-900 tracking-tight">
-              {String(totalActive).padStart(2, "0")}
+              {totalFunding}$
             </h2>
             <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mt-2 inline-block">
               🟢 Verified & Verified Active

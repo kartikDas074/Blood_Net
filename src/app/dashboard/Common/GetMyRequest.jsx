@@ -193,13 +193,12 @@ export default function GetMyRequest({ userId }) {
     }
     console.log("Collected Edited Data:", updatedData);
 
-    // এখানে তোর এপিআই কল করবি ব্যাকএন্ডে আপডেট করার জন্য:
-    // const res = await updateRequestDetails(selectedRequest._id, updatedData);
+ 
   };
 
   return (
     <div className="space-y-6">
-      {/* 📊 ৪টি ডাইমানিক রিইউজেবল স্ট্যাটাস কার্ড */}
+    
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Requests"
@@ -269,7 +268,7 @@ export default function GetMyRequest({ userId }) {
         </div>
       </div>
 
-      {/* 📋 মেইন ডেটা টেবিল */}
+     
       <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
         {loading ? (
           <div className="p-16 flex flex-col justify-center items-center gap-2 text-slate-400 font-bold text-xs">
@@ -338,7 +337,7 @@ export default function GetMyRequest({ userId }) {
                       </td>
                       <td className="p-4 text-right">
                         <div className="flex justify-end gap-1.5">
-                          {/* View বাটন সবসময় থাকবে */}
+                        
                           <Link href={`/dashboard/Common/${reqId}`}>
                             <button
                              
@@ -349,7 +348,7 @@ export default function GetMyRequest({ userId }) {
                             </button>
                           </Link>
 
-                          {/* 🔒 যদি done বা canceled (isClosed) না হয়, তবেই বাকি অ্যাকশন দেখাবে */}
+                         
                           {!isClosed && (
                             <>
                               {req.status === "pending" && (
@@ -409,7 +408,7 @@ export default function GetMyRequest({ userId }) {
           </div>
         )}
 
-        {/* 🔢 পেজিনেশন */}
+       
         {!loading && pagination.totalPages > 1 && (
           <div className="p-4 bg-slate-50/50 border-t border-slate-100 flex justify-between items-center text-[11px] font-bold text-slate-400">
             <div>
@@ -456,7 +455,7 @@ export default function GetMyRequest({ userId }) {
         )}
       </div>
 
-      {/* 🆕 🛑 DONE / CANCEL STATUS CONFIRMATION MODAL */}
+     
       {isStatusModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs">
           <div className="bg-white rounded-2xl w-full max-w-sm p-5 text-center shadow-xl border border-slate-100">
@@ -495,7 +494,7 @@ export default function GetMyRequest({ userId }) {
         </div>
       )}
 
-      {/* 🛑 DELETE CONFIRMATION MODAL */}
+   
       {isDeleteOpen && selectedRequest && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs">
           <div className="bg-white rounded-2xl w-full max-w-sm p-5 text-center shadow-xl border border-slate-100">
@@ -530,7 +529,7 @@ export default function GetMyRequest({ userId }) {
         </div>
       )}
 
-      {/* 👁️ VIEW DETAILS MODAL */}
+    
       {isViewOpen && selectedRequest && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs">
           <div className="bg-white rounded-2xl w-full max-w-md p-5 space-y-3.5 shadow-xl text-xs font-semibold text-slate-600">
@@ -607,7 +606,7 @@ export default function GetMyRequest({ userId }) {
         </div>
       )}
 
-      {/* 📝 EDIT MODAL */}
+     
       {isEditOpen && selectedRequest && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs">
           <div className="bg-white rounded-2xl w-full max-w-md p-5 shadow-xl max-h-[85vh] overflow-y-auto space-y-4">
