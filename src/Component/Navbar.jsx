@@ -223,7 +223,7 @@ export default function Navbar() {
                     {user.role || "Donor"}
                   </span>
                 </div>
-                <Link href="/donate" className="text-center bg-[#E11D48] text-white text-sm font-bold py-2.5 rounded-xl uppercase tracking-wide" onClick={() => setMobileMenuOpen(false)}>Donate Now</Link>
+                <Link href="/funding" className="text-center bg-[#E11D48] text-white text-sm font-bold py-2.5 rounded-xl uppercase tracking-wide" onClick={() => setMobileMenuOpen(false)}>Donate Now</Link>
                 <Link href={`/dashboard/${user.role}`} className="flex items-center justify-center gap-2 text-sm font-bold text-slate-700 py-2 hover:bg-slate-50 rounded-xl" onClick={() => setMobileMenuOpen(false)}>
                   <LayoutDashboard size={16} /> Dashboard
                 </Link>

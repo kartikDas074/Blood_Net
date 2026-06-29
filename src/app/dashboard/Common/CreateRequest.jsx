@@ -12,19 +12,17 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 
-
 import districtData from "../../../Constants/District.json";
 import upazilaData from "../../../Constants/Upazila.json";
 import { CreateDonationRequest } from "@/lib/action/DonationRequestCreate";
 import { useRouter } from "next/navigation";
 
-
 export default function CreateRequest({ user }) {
- 
   const loggedInUser = user;
+  const isBlocked = loggedInUser?.status === "blocked";
   const [formData, setFormData] = useState({
     recipientName: "",
-    districtId: "", 
+    districtId: "",
     districtName: "",
     upazila: "",
     hospitalName: "",
@@ -38,7 +36,6 @@ export default function CreateRequest({ user }) {
   const districtsList = districtData[0]?.data || [];
   const allUpazilasList = upazilaData[0]?.data || [];
 
- 
   const availableUpazilas = formData.districtId
     ? allUpazilasList.filter((u) => u.district_id === formData.districtId)
     : [];
@@ -59,21 +56,26 @@ export default function CreateRequest({ user }) {
       ...prev,
       districtId: selectedId,
       districtName: selectedDistrictObj ? selectedDistrictObj.name : "",
-      upazila: "", 
+      upazila: "",
     }));
   };
-  
-  const router=useRouter();
+
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
+    if (isBlocked) {
+      toast.error(
+        "Your account is blocked. You cannot create donation requests!",
+      );
+      return;
+    }
     const finalSubmissionData = {
-      requester_id:loggedInUser.id,
+      requester_id: loggedInUser.id,
       requesterName: loggedInUser.name,
       requesterEmail: loggedInUser.email,
       recipient_name: formData.recipientName,
-      district: formData.districtName, 
+      district: formData.districtName,
       upazila: formData.upazila,
       hospital_name: formData.hospitalName,
       full_address: formData.fullAddress,
@@ -81,23 +83,20 @@ export default function CreateRequest({ user }) {
       donation_date: formData.donationDate,
       donation_time: formData.donationTime,
       request_message: formData.requestMessage,
-      status: "pending", 
+      status: "pending",
     };
-    console.log(finalSubmissionData);
-
-    const result=await CreateDonationRequest(finalSubmissionData);
-    console.log(result);
-    if(result.insertedId){
-      toast.success('Your donation-request Creat successfully');
-      router.push(`/dashboard/${user.role}/my-donation-requests`)
-    }
-
     
+
+    const result = await CreateDonationRequest(finalSubmissionData);
+    console.log(result);
+    if (result.insertedId) {
+      toast.success("Your donation-request Creat successfully");
+      router.push(`/dashboard/${user.role}/my-donation-requests`);
+    }
   };
 
   return (
     <div className="max-w-4xl mx-auto my-6 px-4 font-sans select-none animate-in fade-in duration-300">
-     
       <div className="mb-6 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
@@ -115,7 +114,7 @@ export default function CreateRequest({ user }) {
         <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide">
-            Active Session
+           {user.status} Session
           </span>
         </div>
       </div>
@@ -124,7 +123,6 @@ export default function CreateRequest({ user }) {
         onSubmit={handleSubmit}
         className="bg-white border-t-4 border-[#E11D48] rounded-2xl shadow-xl border border-slate-200/80 p-6 space-y-6"
       >
-       
         <div className="space-y-4">
           <div className="flex items-center gap-2 text-[#E11D48] font-black text-sm uppercase tracking-wider">
             <User size={18} strokeWidth={2.5} />
@@ -156,7 +154,6 @@ export default function CreateRequest({ user }) {
           </div>
         </div>
 
-        
         <div className="space-y-4 pt-2">
           <div className="flex items-center gap-2 text-[#E11D48] font-black text-sm uppercase tracking-wider">
             <MapPin size={18} strokeWidth={2.5} />
@@ -178,7 +175,6 @@ export default function CreateRequest({ user }) {
               />
             </div>
 
-          
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
                 District
@@ -199,7 +195,6 @@ export default function CreateRequest({ user }) {
               </select>
             </div>
 
-           
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
                 Upazila
@@ -227,7 +222,6 @@ export default function CreateRequest({ user }) {
           </div>
         </div>
 
-        
         <div className="space-y-4 pt-2">
           <div className="flex items-center gap-2 text-[#E11D48] font-black text-sm uppercase tracking-wider">
             <Building2 size={18} strokeWidth={2.5} />
@@ -265,8 +259,6 @@ export default function CreateRequest({ user }) {
           </div>
         </div>
 
-       
-       
         <div className="space-y-4 pt-2">
           <div className="flex items-center gap-2 text-[#E11D48] font-black text-sm uppercase tracking-wider">
             <Droplet size={18} strokeWidth={2.5} />
@@ -296,7 +288,6 @@ export default function CreateRequest({ user }) {
               </select>
             </div>
 
-            
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
                 Donation Date
@@ -306,7 +297,6 @@ export default function CreateRequest({ user }) {
                   type="date"
                   name="donationDate"
                   required
-                 
                   min={new Date().toISOString().split("T")[0]}
                   value={formData.donationDate}
                   onChange={handleInputChange}
@@ -319,7 +309,6 @@ export default function CreateRequest({ user }) {
               </div>
             </div>
 
-           
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
                 Preferred Time
@@ -341,7 +330,7 @@ export default function CreateRequest({ user }) {
             </div>
           </div>
         </div>
-       
+
         <div className="space-y-4 pt-2">
           <div className="flex items-center gap-2 text-[#E11D48] font-black text-sm uppercase tracking-wider">
             <MessageSquare size={18} strokeWidth={2.5} />
@@ -367,7 +356,6 @@ export default function CreateRequest({ user }) {
           </div>
         </div>
 
-       
         <div className="pt-4">
           <button
             type="submit"
