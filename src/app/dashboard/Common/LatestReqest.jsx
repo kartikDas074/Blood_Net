@@ -117,7 +117,7 @@ const LatestRequest = ({ data = [], userId,userRole='donor' }) => {
         {data.length === 0 ? (
           <div className="p-12 text-center space-y-3">
             <p className="text-xs font-semibold text-slate-400">
-              You haven't posted any blood donation requests yet.
+              You have not posted any blood donation requests yet.
             </p>
             <Link href={`/dashboard/${userRole}/create-donation-request`}>
               <button className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-rose-600 text-white rounded-lg text-xs font-bold hover:bg-rose-700 transition mt-2">

@@ -16,7 +16,7 @@ import {
 import LatestRequest from "../Common/LatestReqest";
 
 const AdminPage = async () => {
-  // 🛰️ ডেটা ফেচিং
+  
   const Info = await allInfo();
   const result = await latestRequest();
   const stat = Info?.statistics;
@@ -25,7 +25,7 @@ const AdminPage = async () => {
 
   const userId = user?._id?.toString() || user?.id;
 
-  // 🎯 ডাটাবেজ থেকে রিয়েল-টাইম ডাটা ম্যাপিং
+  
   const totalUsers = stat?.totalUsers || 0;
   const totalDonations = stat?.totalDonations || 0;
   const totalDonors = stat?.totalDonors || 0;
@@ -34,7 +34,7 @@ const AdminPage = async () => {
   const totalActive = stat?.totalActive || 0;
   const totalBlocked = stat?.totalBlocked || 0; 
 
-  // 📊 উইকলি বার চার্টের জন্য ডামি ডেটা (যেমনটা রাখতে বলেছিস)
+ 
   const weeklyRequests = [
     { day: "MON", value: 40 },
     { day: "TUE", value: 65 },
@@ -50,7 +50,7 @@ const AdminPage = async () => {
   return (
     <div className="min-h-screen bg-slate-50 p-4 lg:p-8 font-sans">
       
-      {/* ================= 👑 HERO / ADMIN BANNER ================= */}
+     
       <div className="mb-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 rounded-3xl border border-slate-200/80 bg-white p-6 lg:p-8 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full blur-2xl -z-10"></div>
         
@@ -91,10 +91,10 @@ const AdminPage = async () => {
         </div>
       </div>
 
-      {/* ================= 📈 ROW 1: CORE METRICS ================= */}
+      
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3 mb-6">
         
-        {/* Total Users */}
+        
         <div className="bg-white border border-slate-200/60 rounded-2xl p-6 flex justify-between items-center shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 left-0 h-1 w-full bg-blue-500"></div>
           <div>
@@ -111,7 +111,7 @@ const AdminPage = async () => {
           </div>
         </div>
 
-        {/* Total Donations */}
+        
         <div className="bg-white border border-slate-200/60 rounded-2xl p-6 flex justify-between items-center shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 left-0 h-1 w-full bg-rose-500"></div>
           <div>
@@ -128,7 +128,7 @@ const AdminPage = async () => {
           </div>
         </div>
 
-        {/* Active Accounts */}
+        
         <div className="bg-white border border-slate-200/60 rounded-2xl p-6 flex justify-between items-center shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 left-0 h-1 w-full bg-emerald-500"></div>
           <div>
@@ -147,10 +147,10 @@ const AdminPage = async () => {
 
       </div>
 
-      {/* ================= 🛡️ ROW 2: SUB-ROLES & MANAGEMENT STATS ================= */}
+     
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         
-        {/* Donors Segment */}
+       
         <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm flex items-center gap-4">
           <div className="p-3 bg-red-50 text-red-500 rounded-xl"><UserCheck className="h-5 w-5" /></div>
           <div>
