@@ -134,6 +134,8 @@ const LatestRequest = ({ data = [], userId,userRole='donor' }) => {
                   <th className="p-4">Location & Hospital</th>
                   <th className="p-4 text-center">Blood Group</th>
                   <th className="p-4 text-center">Status</th>
+                  <th className="p-4 text-center">Date/Time</th>
+                  <th className="p-4 text-center">Donor</th>
                   <th className="p-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -166,6 +168,19 @@ const LatestRequest = ({ data = [], userId,userRole='donor' }) => {
                           • {req.status}
                         </span>
                       </td>
+                      <td className="p-4">
+                        <span className="block text-slate-700 font-medium text-center">{req.donation_date}</span>
+                        <span className="text-[10px] text-slate-400 font-medium block mt-0.5 text-center">
+                         {req.donation_time}
+                        </span>
+                      </td>
+                       <td className="p-4">
+                        <span className="block text-slate-700 font-medium text-center">{req.donor_name||"---"}</span>
+                        <span className="text-[10px] text-slate-400 font-medium block mt-0.5 text-center">
+                         {req.donor_email}
+                        </span>
+                      </td>
+
                       <td className="p-4 text-right">
                         <div className="flex justify-end gap-1.5">
                           <Link href={`/dashboard/Common/${reqId}`}>

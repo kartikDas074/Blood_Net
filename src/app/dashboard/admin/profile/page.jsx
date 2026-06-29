@@ -1,6 +1,7 @@
 import { userInfo } from '@/lib/core/session';
 import React from 'react';
 import Myprofile from '../../Common/Myprofile';
+import { getFunding } from '@/lib/api/FindData';
 
 const ProfilePage =async () => {
     const session=await userInfo();

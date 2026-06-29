@@ -315,6 +315,7 @@ export default function GetAllRequest({
                   <th className="p-4 text-center">Blood Group</th>
                   <th className="p-4">Date / Time</th>
                   <th className="p-4 text-center">Status</th>
+                  <th className="p-4 text-center">Donor</th>
                   <th className="p-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -360,6 +361,14 @@ export default function GetAllRequest({
                           }`}
                         >
                           • {req.status}
+                        </span>
+                      </td>
+                       <td className="p-4 text-slate-500 font-medium text-[11px]">
+                        <span className="block font-bold text-slate-700 text-center">
+                          {req.donor_name||"---"}
+                        </span>
+                        <span className="block text-[10px] text-slate-400 font-bold text-center uppercase">
+                          {req.donor_email||""}
                         </span>
                       </td>
                       <td className="p-4 text-right">
