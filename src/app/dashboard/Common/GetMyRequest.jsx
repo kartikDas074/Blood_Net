@@ -288,7 +288,9 @@ export default function GetMyRequest({ userId }) {
                   <th className="p-4 text-center">Blood Group</th>
                   <th className="p-4">Date / Time</th>
                   <th className="p-4 text-center">Status</th>
+                   <th className={`p-4 text-center`}>Donor</th>
                   <th className="p-4 text-right">Actions</th>
+                 
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs font-semibold text-slate-700">
@@ -333,6 +335,14 @@ export default function GetMyRequest({ userId }) {
                           }`}
                         >
                           • {req.status}
+                        </span>
+                      </td>
+                      <td className="p-4 text-slate-500 font-medium text-[11px] ">
+                        <span className="block font-bold text-slate-700 text-center">
+                          {req.donor_name||"---"}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-bold uppercase text-center">
+                          {req.donor_email||""}
                         </span>
                       </td>
                       <td className="p-4 text-right">
@@ -474,7 +484,7 @@ export default function GetMyRequest({ userId }) {
               </span>
               ?
               <br />
-              একবার আপডেট করলে এটি আর পরিবর্তন করা যাবে না।
+              THis will update Permanantly and you cannot change it.
             </p>
             <div className="flex gap-2 justify-center mt-4 text-xs font-bold">
               <button

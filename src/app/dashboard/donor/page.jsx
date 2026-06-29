@@ -1,4 +1,4 @@
-import { latestRequest } from "@/lib/api/FindData";
+import { getFunding, latestRequest } from "@/lib/api/FindData";
 import { userInfo } from "@/lib/core/session";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,11 +18,10 @@ const Page = async () => {
   const stat = result?.statistics;
   const session = await userInfo();
   const user = session?.user;
-  
-  // অ্যাকশনের জন্য স্ট্রিং বা অবজেক্ট আইডি বের করা হলো
+ 
   const userId = user?._id?.toString() || user?.id; 
-
-  const totalMoneyDonated = 0;
+  const money=await getFunding(1);
+  const totalMoneyDonated = money?.totalAmount;
 
   return (
     <div className="min-h-screen bg-slate-50 p-5 lg:p-8">
