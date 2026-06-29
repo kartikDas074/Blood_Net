@@ -83,12 +83,11 @@ const AdminPage = async () => {
         </div>
 
         <div className="flex flex-wrap gap-3 w-full lg:w-auto">
-          <Link
-            href="/dashboard/admin/campaigns"
+          <div
             className="group flex-1 lg:flex-none justify-center inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-slate-800 transition-all duration-200"
           >
             <Plus className="h-4 w-4" /> Launch Campaign
-          </Link>
+          </div>
         </div>
       </div>
 

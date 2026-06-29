@@ -24,7 +24,7 @@ import upazilaData from "../../../Constants/Upazila.json";
 import { profileUpdata } from '@/lib/action/profile';
 import { useRouter } from 'next/navigation';
 
-const Myprofile = ({ user }) => {
+const Myprofile = ({ user,totalAmount=0 }) => {
   const router = useRouter();
   const {
     _id,
@@ -423,7 +423,7 @@ const Myprofile = ({ user }) => {
                 <div className="p-2 bg-rose-50 rounded-lg text-rose-500"><Award className="w-4 h-4" /></div>
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase">Total Donations</p>
-                  <p className="text-sm font-extrabold text-slate-700">0 Blocks</p>
+                  <p className="text-sm font-extrabold text-slate-700">{totalAmount} $</p>
                 </div>
               </div>
 

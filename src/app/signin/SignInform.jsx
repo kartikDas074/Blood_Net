@@ -177,7 +177,7 @@ export default function SignInform() {
                 Remember Me
               </label>
               <Link
-                href="/forgot-password"
+                href="/#"
                 className="text-[#E11D48] hover:text-[#BE123C] font-bold transition"
               >
                 Forgot password?
