@@ -136,3 +136,8 @@ export const getTotalFunding=async()=>{
   const result=await serverGet('/api/total_funding');
   return result;
 }
+
+export const getDonar=async(grp,district,upazila)=>{
+  const result=await serverGet(`/api/donor-data?grp=${grp}&district=${district}&upazila=${upazila}`);
+  return result;
+}
