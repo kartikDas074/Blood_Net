@@ -3,29 +3,26 @@ import React, { useState } from "react";
 import { Search, MapPin, Droplet, Mail, Calendar, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 
-// 🌍 আসল JSON ফাইল ইম্পোর্ট
+
 import DistrictData from "../../Constants/District.json";
 import UpazilaData from "../../Constants/Upazila.json";
 
-// 📞 তোমার ইম্পোর্ট করা আসল API ফাংশন
 import { getDonar } from "@/lib/api/FindData";
 
 export default function DonorSearchPage() {
-  // ফর্ম স্টেটসমূহ
+
   const [bloodGroup, setBloodGroup] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
 
-  // ডাটা ও হ্যান্ডলিং স্টেট
   const [donors, setDonors] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [loading, setLoading] = useState(false); // 👈 এই যে এখানে পারফেক্টলি আছে
 
-  // টপ-লেভেল অ্যারে থেকে সেফলি মূল ডাটা লিস্ট বের করে আনা [Index 0]
+ 
   const districtsList = DistrictData[0]?.data || [];
   const upazilasList = UpazilaData[0]?.data || [];
 
-  // ✨ রেন্ডার টাইমে জাস্ট-ইন-টাইম উপজেলা ফিল্টারিং
   let filteredUpazilas = [];
   if (selectedDistrict) {
     const districtObj = districtsList.find(
@@ -39,13 +36,13 @@ export default function DonorSearchPage() {
     }
   }
 
-  // ডিস্ট্রিক্ট চেঞ্জ হ্যান্ডলার
+
   const handleDistrictChange = (e) => {
     setSelectedDistrict(e.target.value);
-    setSelectedUpazila(""); // জেলা পাল্টালে উপজেলা রিসেট
+    setSelectedUpazila(""); 
   };
 
-  // সার্চ সাবমিট হ্যান্ডলার
+ 
   const handleSearch = async (e) => {
     e.preventDefault();
 
@@ -78,7 +75,7 @@ export default function DonorSearchPage() {
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* 📋 হেডার সেকশন */}
+      
         <div className="text-center max-w-xl mx-auto space-y-2">
           <div className="inline-flex p-2 bg-rose-50 rounded-xl text-[#991B1B]">
             <Droplet size={28} className="fill-current animate-pulse" />

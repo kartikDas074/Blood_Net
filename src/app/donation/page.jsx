@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link"; // লিঙ্ক কম্পোনেন্ট ইম্পোর্ট করলাম
+import Link from "next/link"; 
 import {
   Search,
   MapPin,
@@ -17,18 +17,9 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { getAllPending } from "@/lib/api/FindData";
-
+import DistrictList from '../../Constants/District.json'
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-const DISTRICTS = [
-  "Dhaka",
-  "Chittagong",
-  "Rajshahi",
-  "Sylhet",
-  "Khulna",
-  "Barisal",
-  "Rangpur",
-  "Mymensingh",
-];
+const DISTRICTS =DistrictList[0].data;
 
 export default function ActiveDonationRequests() {
   const [requests, setRequests] = useState([]);
@@ -156,8 +147,8 @@ export default function ActiveDonationRequests() {
               >
                 <option value="">All Over Bangladesh</option>
                 {DISTRICTS.map((dist) => (
-                  <option key={dist} value={dist}>
-                    {dist}
+                  <option key={dist.id} value={dist.name}>
+                    {dist.name}
                   </option>
                 ))}
               </select>

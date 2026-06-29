@@ -1,10 +1,10 @@
+import { allInfo } from '@/lib/api/FindData';
 import React from 'react';
 
-const page = () => {
+const page = async () => {
     return (
         <div>
-           i am the dashboard
-            
+           
         </div>
     );
 };
