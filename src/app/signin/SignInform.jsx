@@ -37,7 +37,8 @@ export default function SignInform() {
         toast.error(error.message || "Invalid email or password!");
       } else {
         toast.success("Welcome back! Login successful.");
-        router.push(pathUrl);
+        router.refresh();
+       window.location.href = "/";
       }
     } catch (err) {
       console.error("Login Error:", err);

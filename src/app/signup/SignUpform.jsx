@@ -118,7 +118,8 @@ export default function SignUpform() {
       toast.error(error.message || "Sign up failed!");
     } else {
       toast.success("Account created successfully!");
-      router.push(pathUrl);
+      router.refresh();
+      window.location.href = "/";
     }
   };
 
